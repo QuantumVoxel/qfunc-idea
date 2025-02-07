@@ -1,0 +1,141 @@
+{
+  parserClass="dev.ultreon.quantum.qfunc.parser.SimpleParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Quantum"
+  psiImplClassSuffix="Impl"
+  psiPackage="dev.ultreon.quantum.qfunc.psi"
+  psiImplPackage="dev.ultreon.quantum.qfunc.psi.impl"
+
+  elementTypeHolderClass="dev.ultreon.quantum.qfunc.psi.QuantumTypes"
+  elementTypeClass="dev.ultreon.quantum.qfunc.psi.QuantumElementType"
+  tokenTypeClass="dev.ultreon.quantum.qfunc.psi.QuantumTokenType"
+}
+
+file ::= (statement)*
+
+statement ::= (line_comment
+            | persist_statement
+            | input_statement
+            | assignment
+            | function_call
+            | stop_statement
+            | if_statement
+            | for_statement
+            | while_statement
+            | loop_statement
+            | return_statement
+            | break_statement
+            | continue_statement
+            | block_statement
+            | expression_statement)
+
+expression_statement ::= expression SEMICOLON
+
+line_comment ::= COMMENT
+
+block_statement ::= LBRACE (statement)* RBRACE
+
+persist_statement ::= HASH PERSIST directive_type global_name (global_name)*
+
+directive_type ::= LESS_THAN IDENTIFIER GREATER_THAN
+
+input_statement ::= HASH INPUT param_name (param_name)*
+
+condition ::= (is_cond | expression)
+
+is_cond ::= expression IS expression
+
+assignment ::= global_expr ASSIGN expression SEMICOLON
+
+global_name ::= IDENTIFIER {
+                            mixin="dev.ultreon.quantum.qfunc.psi.impl.QuantumNamedElementImpl"
+                            implements="dev.ultreon.quantum.qfunc.psi.QuantumNamedElement"
+                            methods=[getKey getValue getName setName getNameIdentifier]
+                          }
+
+global_expr ::= DOLLAR global_name
+
+param_name ::= IDENTIFIER {
+                           mixin="dev.ultreon.quantum.qfunc.psi.impl.QuantumNamedElementImpl"
+                           implements="dev.ultreon.quantum.qfunc.psi.QuantumNamedElement"
+                           methods=[getKey getValue getName setName getNameIdentifier]
+                         }
+
+parameter_expr ::= AT param_name
+
+expression ::= group
+
+group ::= (LPAREN and_expr RPAREN) | and_expr
+
+and_expr ::= or_expr (AND and_expr)?
+
+or_expr ::= negation_expr (OR or_expr)?
+
+negation_expr ::= NOT? equality_expr | NOT negation_expr
+
+equality_expr ::= relational_expr (EQUAL equality_expr)? | relational_expr (NOT_EQUAL equality_expr)?
+
+relational_expr ::= bitwise_and_expr (LESS_THAN relational_expr)? | bitwise_and_expr (GREATER_THAN relational_expr)? | bitwise_and_expr (LESS_THAN_EQUAL relational_expr)? | bitwise_and_expr (GREATER_THAN_EQUAL relational_expr)?
+
+bitwise_and_expr ::= bitwise_or_expr (BITWISE_AND bitwise_and_expr)?
+
+bitwise_or_expr ::= bitwise_xor_expr (BITWISE_OR bitwise_or_expr)?
+
+bitwise_xor_expr ::= bitwise_not_expr (BITWISE_XOR bitwise_xor_expr)?
+
+bitwise_not_expr ::= BITWISE_NOT? shift_expr | BITWISE_NOT bitwise_not_expr
+
+shift_expr ::= mult_expr ((SHIFT_LEFT | SHIFT_RIGHT) shift_expr)*
+
+mult_expr ::= add_expr ((STAR | SLASH | PERCENT) mult_expr)*
+
+add_expr ::= primary ((PLUS | MINUS) add_expr)*
+
+primary ::= atom
+
+atom ::= named_atom
+       | STRING
+       | NUMBER
+       | FLOATING_POINT
+       | BOOLEAN
+       | id
+
+named_atom ::= (global_expr | parameter_expr | function_call | variable_name) member*
+
+variable_name ::= IDENTIFIER
+
+id ::= (LBRACKET namespace COLON path RBRACKET) | (LBRACKET HASH namespace COLON path RBRACKET)
+
+func_name ::= IDENTIFIER
+
+function_call ::= func_name argument_list
+
+member ::= COLON (function_call | variable_name)
+
+namespace ::= IDENTIFIER
+
+path ::= IDENTIFIER
+
+argument_list ::= LPAREN (argument_expr (COMMA argument_expr)*)? RPAREN
+
+parameter_name ::= IDENTIFIER
+
+argument_expr ::= (parameter_name COLON expression) | expression
+
+stop_statement ::= STOP SEMICOLON
+
+if_statement ::= IF condition statement (ELSE statement)?
+
+for_statement ::= FOR IDENTIFIER IN expression statement
+
+while_statement ::= WHILE condition statement
+
+loop_statement ::= LOOP statement
+
+return_statement ::= RETURN expression SEMICOLON
+
+break_statement ::= BREAK SEMICOLON
+
+continue_statement ::= CONTINUE SEMICOLON

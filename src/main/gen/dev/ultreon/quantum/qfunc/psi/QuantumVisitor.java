@@ -171,6 +171,10 @@ public class QuantumVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPresentCond(@NotNull QuantumPresentCond o) {
+    visitPsiElement(o);
+  }
+
   public void visitPrimary(@NotNull QuantumPrimary o) {
     visitPsiElement(o);
   }

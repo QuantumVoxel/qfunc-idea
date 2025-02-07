@@ -43,7 +43,9 @@ directive_type ::= LESS_THAN IDENTIFIER GREATER_THAN
 
 input_statement ::= HASH INPUT param_name (param_name)*
 
-condition ::= (is_cond | expression)
+condition ::= (is_cond | present_cond | expression)
+
+present_cond ::= PRESENT global_expr
 
 is_cond ::= expression IS expression
 

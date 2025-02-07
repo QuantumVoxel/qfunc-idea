@@ -49,6 +49,7 @@ public interface QuantumTypes {
   IElementType PARAM_NAME = new QuantumElementType("PARAM_NAME");
   IElementType PATH = new QuantumElementType("PATH");
   IElementType PERSIST_STATEMENT = new QuantumElementType("PERSIST_STATEMENT");
+  IElementType PRESENT_COND = new QuantumElementType("PRESENT_COND");
   IElementType PRIMARY = new QuantumElementType("PRIMARY");
   IElementType RELATIONAL_EXPR = new QuantumElementType("RELATIONAL_EXPR");
   IElementType RETURN_STATEMENT = new QuantumElementType("RETURN_STATEMENT");
@@ -98,6 +99,7 @@ public interface QuantumTypes {
   IElementType PERCENT = new QuantumTokenType("PERCENT");
   IElementType PERSIST = new QuantumTokenType("PERSIST");
   IElementType PLUS = new QuantumTokenType("PLUS");
+  IElementType PRESENT = new QuantumTokenType("PRESENT");
   IElementType RBRACE = new QuantumTokenType("RBRACE");
   IElementType RBRACKET = new QuantumTokenType("RBRACKET");
   IElementType RETURN = new QuantumTokenType("RETURN");
@@ -236,6 +238,9 @@ public interface QuantumTypes {
       }
       else if (type == PERSIST_STATEMENT) {
         return new QuantumPersistStatementImpl(node);
+      }
+      else if (type == PRESENT_COND) {
+        return new QuantumPresentCondImpl(node);
       }
       else if (type == PRIMARY) {
         return new QuantumPrimaryImpl(node);

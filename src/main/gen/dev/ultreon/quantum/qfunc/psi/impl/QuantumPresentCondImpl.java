@@ -11,14 +11,14 @@ import static dev.ultreon.quantum.qfunc.psi.QuantumTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.ultreon.quantum.qfunc.psi.*;
 
-public class QuantumConditionImpl extends ASTWrapperPsiElement implements QuantumCondition {
+public class QuantumPresentCondImpl extends ASTWrapperPsiElement implements QuantumPresentCond {
 
-  public QuantumConditionImpl(@NotNull ASTNode node) {
+  public QuantumPresentCondImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull QuantumVisitor visitor) {
-    visitor.visitCondition(this);
+    visitor.visitPresentCond(this);
   }
 
   @Override
@@ -28,21 +28,9 @@ public class QuantumConditionImpl extends ASTWrapperPsiElement implements Quantu
   }
 
   @Override
-  @Nullable
-  public QuantumExpression getExpression() {
-    return findChildByClass(QuantumExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public QuantumIsCond getIsCond() {
-    return findChildByClass(QuantumIsCond.class);
-  }
-
-  @Override
-  @Nullable
-  public QuantumPresentCond getPresentCond() {
-    return findChildByClass(QuantumPresentCond.class);
+  @NotNull
+  public QuantumGlobalExpr getGlobalExpr() {
+    return findNotNullChildByClass(QuantumGlobalExpr.class);
   }
 
 }

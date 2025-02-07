@@ -15,13 +15,11 @@ public interface QuantumGlobalName extends QuantumNamedElement {
   //matching getValue(QuantumGlobalName, ...)
   //methods are not found in null
 
-  //WARNING: getName(...) is skipped
-  //matching getName(QuantumGlobalName, ...)
-  //methods are not found in null
+  @Nullable
+  String getName();
 
-  //WARNING: setName(...) is skipped
-  //matching setName(QuantumGlobalName, ...)
-  //methods are not found in null
+  @NotNull
+  PsiElement setName(@NotNull String name);
 
   //WARNING: getNameIdentifier(...) is skipped
   //matching getNameIdentifier(QuantumGlobalName, ...)

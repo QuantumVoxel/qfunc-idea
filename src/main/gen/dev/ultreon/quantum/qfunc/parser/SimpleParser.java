@@ -401,12 +401,13 @@ public class SimpleParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // is_cond | expression
+  // is_cond | present_cond | expression
   public static boolean condition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "condition")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CONDITION, "<condition>");
     r = is_cond(b, l + 1);
+    if (!r) r = present_cond(b, l + 1);
     if (!r) r = expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -1051,6 +1052,19 @@ public class SimpleParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = global_name(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PRESENT global_expr
+  public static boolean present_cond(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "present_cond")) return false;
+    if (!nextTokenIs(b, PRESENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PRESENT);
+    r = r && global_expr(b, l + 1);
+    exit_section_(b, m, PRESENT_COND, r);
     return r;
   }
 

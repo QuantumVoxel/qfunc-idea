@@ -68,6 +68,7 @@ PERSIST_DIRECTIVE = "persist"
 DIRECTIVE = INPUT_DIRECTIVE | PERSIST_DIRECTIVE
 DOLLAR = "$"
 AT = "@"
+PRESENT = "present"
 
 %%
 
@@ -119,6 +120,7 @@ AT = "@"
     {IDENTIFIER}         { return IDENTIFIER; }
     {FLOATING_POINT}     { return FLOATING_POINT; }
     {NUMBER}             { return NUMBER; }
+    {PRESENT}            { return PRESENT; }
 
    . { return com.intellij.psi.TokenType.BAD_CHARACTER; }
 }

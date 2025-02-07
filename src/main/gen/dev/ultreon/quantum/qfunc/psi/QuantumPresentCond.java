@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface QuantumCondition extends PsiElement {
+public interface QuantumPresentCond extends PsiElement {
 
-  @Nullable
-  QuantumExpression getExpression();
-
-  @Nullable
-  QuantumIsCond getIsCond();
-
-  @Nullable
-  QuantumPresentCond getPresentCond();
+  @NotNull
+  QuantumGlobalExpr getGlobalExpr();
 
 }

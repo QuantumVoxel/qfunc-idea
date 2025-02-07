@@ -61,7 +61,7 @@ class QuantumCompletionContributor : CompletionContributor() {
                 // TODO
             } else if (parameters.position.parent.elementType == QuantumTypes.DIRECTIVE_TYPE) {
                 for (param in listOf(
-                    "string", "int", "float", "binary"
+                    "string", "int", "float", "binary", "id"
                 ).sorted()) {
                     if (parameters.position.text.startsWith(prefix)) {
                         result.addElement(LookupElementBuilder.create(param).withIcon(AllIcons.Nodes.Type).withTypeText("Game Object"))
@@ -69,7 +69,9 @@ class QuantumCompletionContributor : CompletionContributor() {
                 }
                 for (param in listOf(
                     "block-entity", "block", "item", "entity", "entity-template", "dimension", "player",
-                    "vector", "grid-point", "context-type"
+                    "vector", "grid-point", "type", "condition", "block-state", "direction", "axis",
+                    "item-stack", "mat4", "mat3", "json", "component-map", "component-type-list", "component",
+                    "function"
                 ).sorted()) {
                     if (parameters.position.text.startsWith(prefix)) {
                         result.addElement(LookupElementBuilder.create(param).withIcon(AllIcons.Nodes.Class).withTypeText("Game Object"))

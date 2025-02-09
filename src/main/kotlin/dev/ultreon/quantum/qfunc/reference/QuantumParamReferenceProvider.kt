@@ -9,7 +9,8 @@ import dev.ultreon.quantum.qfunc.psi.QuantumParamName
 import dev.ultreon.quantum.qfunc.psi.QuantumPsiUtil
 
 class QuantumParamReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-        return element.containingFile.descendantsOfType<QuantumParamName>().map { QuantumParamReference(it) }.toList().toTypedArray()
-    }
+  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    return element.containingFile.descendantsOfType<QuantumParamName>().map { QuantumParamReference(it) }.toList()
+      .toTypedArray()
+  }
 }

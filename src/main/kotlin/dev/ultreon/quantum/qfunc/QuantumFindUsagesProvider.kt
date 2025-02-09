@@ -13,53 +13,53 @@ import org.jetbrains.annotations.Nls
 import org.jetbrains.annotations.NonNls
 
 class QuantumFindUsagesProvider : FindUsagesProvider {
-    override fun getWordsScanner(): WordsScanner {
-        return object : DefaultWordsScanner(
-            FlexAdapter(QuantumLexer(null)),
-            QuantumTokenSets.names,
-            QuantumTokenSets.comments,
-            QuantumTokenSets.literals
-        ) {
+  override fun getWordsScanner(): WordsScanner {
+    return object : DefaultWordsScanner(
+      FlexAdapter(QuantumLexer(null)),
+      QuantumTokenSets.names,
+      QuantumTokenSets.comments,
+      QuantumTokenSets.literals
+    ) {
 
-        }
     }
+  }
 
-    override fun canFindUsagesFor(psiElement: PsiElement): Boolean {
-        return psiElement is PsiNamedElement
+  override fun canFindUsagesFor(psiElement: PsiElement): Boolean {
+    return psiElement is PsiNamedElement
+  }
+
+  override fun getHelpId(psiElement: PsiElement): @NonNls String? {
+    return null
+  }
+
+
+  override fun getType(element: PsiElement): @Nls String {
+    if (element is QuantumGlobalName) {
+      return "global name"
     }
-
-    override fun getHelpId(psiElement: PsiElement): @NonNls String? {
-        return null
+    if (element is QuantumParamName) {
+      return "input parameter name"
     }
+    return ""
+  }
 
-
-    override fun getType(element: PsiElement): @Nls String {
-        if (element is QuantumGlobalName) {
-            return "global name"
-        }
-        if (element is QuantumParamName) {
-            return "input parameter name"
-        }
-        return ""
+  override fun getDescriptiveName(element: PsiElement): String {
+    if (element is QuantumGlobalName) {
+      return element.text
     }
-
-    override fun getDescriptiveName(element: PsiElement): String {
-        if (element is QuantumGlobalName) {
-            return element.text
-        }
-        if (element is QuantumParamName) {
-            return element.text
-        }
-        return ""
+    if (element is QuantumParamName) {
+      return element.text
     }
+    return ""
+  }
 
-    override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        if (element is QuantumGlobalName) {
-            return element.text
-        }
-        if (element is QuantumParamName) {
-            return element.text
-        }
-        return ""
+  override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
+    if (element is QuantumGlobalName) {
+      return element.text
     }
+    if (element is QuantumParamName) {
+      return element.text
+    }
+    return ""
+  }
 }

@@ -15,32 +15,33 @@ import dev.ultreon.quantum.qfunc.psi.QuantumParameterName
 import dev.ultreon.quantum.qfunc.psi.QuantumPsiUtil
 
 
-class QuantumParamReference(element: PsiElement, textRange: TextRange = element.textRange) : PsiPolyVariantReferenceBase<PsiElement>(element, textRange) {
-    private val key: String = element.text
-        .substring(textRange.startOffset, textRange.endOffset)
+class QuantumParamReference(element: PsiElement, textRange: TextRange = element.textRange) :
+  PsiPolyVariantReferenceBase<PsiElement>(element, textRange) {
+  private val key: String = element.text
+    .substring(textRange.startOffset, textRange.endOffset)
 
-    override fun getVariants(): Array<Any> {
-        println("Element: $key")
-        val variants: MutableList<LookupElement> = ArrayList()
-        for (variant in element.containingFile.childrenOfType<QuantumParamName>()) {
-            if (!variant.text.equals(element.text)) {
-                variants.add(
-                    LookupElementBuilder
-                        .create(variant).withIcon(AllIcons.Nodes.Constant)
-                        .withTypeText(variant.containingFile.name)
-                )
-            }
-        }
-        return variants.toTypedArray()
+  override fun getVariants(): Array<Any> {
+    println("Element: $key")
+    val variants: MutableList<LookupElement> = ArrayList()
+    for (variant in element.containingFile.childrenOfType<QuantumParamName>()) {
+      if (!variant.text.equals(element.text)) {
+        variants.add(
+          LookupElementBuilder
+            .create(variant).withIcon(AllIcons.Nodes.Constant)
+            .withTypeText(variant.containingFile.name)
+        )
+      }
     }
+    return variants.toTypedArray()
+  }
 
-    override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-        println("Element: $key")
-        val root = element.containingFile
+  override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
+    println("Element: $key")
+    val root = element.containingFile
 
-        return PsiTreeUtil.findChildrenOfType(root, QuantumParameterName::class.java)
-            .filter { QuantumPsiUtil.isDeclaration(it) && it.text == key }
-            .map { PsiElementResolveResult(it) }
-            .toTypedArray()
-    }
+    return PsiTreeUtil.findChildrenOfType(root, QuantumParameterName::class.java)
+      .filter { QuantumPsiUtil.isDeclaration(it) && it.text == key }
+      .map { PsiElementResolveResult(it) }
+      .toTypedArray()
+  }
 }

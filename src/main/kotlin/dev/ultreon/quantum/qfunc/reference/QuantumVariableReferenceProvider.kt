@@ -8,13 +8,13 @@ import com.intellij.util.ProcessingContext
 import dev.ultreon.quantum.qfunc.psi.QuantumPsiUtil
 
 class QuantumVariableReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-        // Only provide references if it's NOT a declaration
-        println("Element: $element")
-        if (element is PsiNamedElement) {
-            return arrayOf(QuantumGlobalReference(element))
-        }
-
-        return emptyArray()
+  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    // Only provide references if it's NOT a declaration
+    println("Element: $element")
+    if (element is PsiNamedElement) {
+      return arrayOf(QuantumGlobalReference(element))
     }
+
+    return emptyArray()
+  }
 }

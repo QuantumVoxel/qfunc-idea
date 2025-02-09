@@ -8,11 +8,11 @@ import dev.ultreon.quantum.qfunc.psi.QuantumNamedElement
 import dev.ultreon.quantum.qfunc.psi.QuantumPsiUtil
 
 open class QuantumNamedElementImpl(node: ASTNode) : ASTWrapperPsiElement(node), QuantumNamedElement {
-    override fun setName(name: String): PsiElement {
-        return QuantumParserUtil.setName(this, name)
-    }
+  override fun setName(name: String): PsiElement {
+    return QuantumParserUtil.setName(this, name)
+  }
 
-    override fun getName(): String? {
-        return QuantumParserUtil.getName(this);
-    }
+  override fun getName(): String? {
+    return QuantumParserUtil.getName(this);
+  }
 }

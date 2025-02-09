@@ -5,9 +5,9 @@ import dev.ultreon.quantum.qfunc.QuantumLang
 
 
 class QuantumTokenType(debugName: String) : IElementType(debugName, QuantumLang) {
-    override fun toString(): String {
-        return "QuantumTokenType." + super.toString()
-    }
+  override fun toString(): String {
+    return "QuantumTokenType." + super.toString()
+  }
 }
 
 object QuantumTokenTypes {

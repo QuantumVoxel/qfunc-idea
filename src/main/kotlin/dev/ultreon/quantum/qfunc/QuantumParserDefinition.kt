@@ -16,37 +16,37 @@ import dev.ultreon.quantum.qfunc.psi.QuantumTokenTypes
 import dev.ultreon.quantum.qfunc.psi.QuantumTypes
 
 class QuantumParserDefinition : ParserDefinition {
-    override fun createLexer(project: Project?): Lexer {
-        return FlexAdapter(QuantumLexer(null))
-    }
+  override fun createLexer(project: Project?): Lexer {
+    return FlexAdapter(QuantumLexer(null))
+  }
 
-    override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements {
-        return ParserDefinition.SpaceRequirements.MAY
-    }
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements {
+    return ParserDefinition.SpaceRequirements.MAY
+  }
 
-    override fun getCommentTokens(): TokenSet {
-        return TokenSet.create(QuantumTypes.COMMENT)
-    }
+  override fun getCommentTokens(): TokenSet {
+    return TokenSet.create(QuantumTypes.COMMENT)
+  }
 
-    override fun getStringLiteralElements(): TokenSet {
-        return TokenSet.create(QuantumTypes.STRING)
-    }
+  override fun getStringLiteralElements(): TokenSet {
+    return TokenSet.create(QuantumTypes.STRING)
+  }
 
-    override fun createParser(project: Project?): PsiParser {
-        return QuantumParser()
-    }
+  override fun createParser(project: Project?): PsiParser {
+    return QuantumParser()
+  }
 
-    override fun getFileNodeType(): IFileElementType {
-        return FILE
-    }
+  override fun getFileNodeType(): IFileElementType {
+    return FILE
+  }
 
-    override fun createFile(viewProvider: FileViewProvider): PsiFile {
-        return QuantumFile(viewProvider)
-    }
+  override fun createFile(viewProvider: FileViewProvider): PsiFile {
+    return QuantumFile(viewProvider)
+  }
 
-    override fun createElement(node: ASTNode): PsiElement {
-        return QuantumTypes.Factory.createElement(node)
-    }
+  override fun createElement(node: ASTNode): PsiElement {
+    return QuantumTypes.Factory.createElement(node)
+  }
 }
 
 val FILE = IFileElementType(QuantumLang)

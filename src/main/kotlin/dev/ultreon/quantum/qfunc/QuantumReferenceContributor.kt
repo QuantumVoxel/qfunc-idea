@@ -11,25 +11,25 @@ import dev.ultreon.quantum.qfunc.reference.QuantumParamReferenceProvider
 import dev.ultreon.quantum.qfunc.reference.QuantumVariableReferenceProvider
 
 class QuantumReferenceContributor : PsiReferenceContributor() {
-    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        println("QuantumReferenceContributor")
+  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+    println("QuantumReferenceContributor")
 
-        registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.GLOBAL_EXPR)),
-            QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
-        )
-        registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.INPUT_STATEMENT)),
-            QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
-        )
-        registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.PARAMETER_EXPR)),
-            QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
-        )
+    registrar.registerReferenceProvider(
+      PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.GLOBAL_EXPR)),
+      QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
+    )
+    registrar.registerReferenceProvider(
+      PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.INPUT_STATEMENT)),
+      QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
+    )
+    registrar.registerReferenceProvider(
+      PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.PARAMETER_EXPR)),
+      QuantumVariableReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
+    )
 
-        registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.PERSIST_STATEMENT)),
-            QuantumGlobalReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
-        )
-    }
+    registrar.registerReferenceProvider(
+      PlatformPatterns.psiElement().withParent(PlatformPatterns.psiElement(QuantumTypes.PERSIST_STATEMENT)),
+      QuantumGlobalReferenceProvider(), PsiReferenceRegistrar.HIGHER_PRIORITY
+    )
+  }
 }

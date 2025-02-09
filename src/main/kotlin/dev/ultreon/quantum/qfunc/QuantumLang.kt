@@ -17,68 +17,69 @@ import javax.swing.Icon
 
 // Define the language
 object QuantumLang : Language("QuantumLang") {
-    override fun getDisplayName(): String {
-        return "Quantum Voxel Function"
-    }
+  override fun getDisplayName(): String {
+    return "Quantum Voxel Function"
+  }
 
-    override fun getAssociatedFileType(): LanguageFileType {
-        return QuantumFileType()
-    }
+  override fun getAssociatedFileType(): LanguageFileType {
+    return QuantumFileType()
+  }
 
-    override fun getMimeTypes(): Array<String> {
-        return arrayOf("text/quantumvoxel+func")
-    }
+  override fun getMimeTypes(): Array<String> {
+    return arrayOf("text/quantumvoxel+func")
+  }
 
-    override fun isCaseSensitive(): Boolean {
-        return true
-    }
+  override fun isCaseSensitive(): Boolean {
+    return true
+  }
 }
 
 // Define the file type
 class QuantumFileType : LanguageFileType(QuantumLang) {
-    override fun getName(): String = "Quantum Voxel Function"
-    override fun getDescription(): String = "Quantum Voxel Function source file"
-    override fun getDefaultExtension(): String = "qfunc"
-    override fun getIcon(): Icon? = null
+  override fun getName(): String = "Quantum Voxel Function"
+  override fun getDescription(): String = "Quantum Voxel Function source file"
+  override fun getDefaultExtension(): String = "qfunc"
+  override fun getIcon(): Icon? = null
 }
 
 // Define the syntax highlighter
 class QuantumSyntaxHighlighter : SyntaxHighlighterBase() {
-    override fun getHighlightingLexer(): Lexer = FlexAdapter(QuantumLexer(null))
+  override fun getHighlightingLexer(): Lexer = FlexAdapter(QuantumLexer(null))
 
-    override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> = when (tokenType) {
-        QuantumTypes.IF, QuantumTypes.ELSE, QuantumTypes.FOR, QuantumTypes.WHILE, QuantumTypes.LOOP, QuantumTypes.BREAK,
-        QuantumTypes.CONTINUE, QuantumTypes.RETURN, QuantumTypes.STOP, QuantumTypes.IS, QuantumTypes.PRESENT -> KEYWORD_KEYS
-        QuantumTypes.PERSIST -> DIRECTIVE_KEYS
-        QuantumTypes.INPUT -> DIRECTIVE_KEYS
-        QuantumTypes.DOLLAR -> VARIABLE_KEYS
-        QuantumTypes.AT -> VARIABLE_KEYS
-        QuantumTypes.FUNC_NAME -> FUNCTION_KEYS
-        QuantumTypes.STRING -> STRING_KEYS
-        QuantumTypes.ID -> TYPE_KEYS
-        QuantumTypes.PARAMETER_EXPR -> PARAMETER_KEYS
-        QuantumTypes.COMMENT -> COMMENT_KEYS
+  override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> = when (tokenType) {
+    QuantumTypes.IF, QuantumTypes.ELSE, QuantumTypes.FOR, QuantumTypes.WHILE, QuantumTypes.LOOP, QuantumTypes.BREAK,
+    QuantumTypes.CONTINUE, QuantumTypes.RETURN, QuantumTypes.STOP, QuantumTypes.IS, QuantumTypes.PRESENT -> KEYWORD_KEYS
 
-        QuantumTypes.HASH, QuantumTypes.AND, QuantumTypes.OR, QuantumTypes.NOT,
-        QuantumTypes.BITWISE_AND, QuantumTypes.BITWISE_OR, QuantumTypes.BITWISE_XOR,
-        QuantumTypes.BITWISE_NOT, QuantumTypes.SHIFT_LEFT, QuantumTypes.SHIFT_RIGHT,
-        QuantumTypes.STAR, QuantumTypes.SLASH, QuantumTypes.PERCENT, QuantumTypes.PLUS, QuantumTypes.MINUS,
-        QuantumTypes.LESS_THAN, QuantumTypes.GREATER_THAN, QuantumTypes.LESS_THAN_EQUAL, QuantumTypes.GREATER_THAN_EQUAL,
-        QuantumTypes.ASSIGN -> EMPTY_KEYS
+    QuantumTypes.PERSIST -> DIRECTIVE_KEYS
+    QuantumTypes.INPUT -> DIRECTIVE_KEYS
+    QuantumTypes.DOLLAR -> VARIABLE_KEYS
+    QuantumTypes.AT -> VARIABLE_KEYS
+    QuantumTypes.FUNC_NAME -> FUNCTION_KEYS
+    QuantumTypes.STRING -> STRING_KEYS
+    QuantumTypes.ID -> TYPE_KEYS
+    QuantumTypes.PARAMETER_EXPR -> PARAMETER_KEYS
+    QuantumTypes.COMMENT -> COMMENT_KEYS
 
-        QuantumTypes.LPAREN, QuantumTypes.RPAREN -> PARENTHESIS_KEYS
-        QuantumTypes.LBRACKET, QuantumTypes.RBRACKET -> BRACKETS_KEYS
-        QuantumTypes.LBRACE, QuantumTypes.RBRACE -> BRACES_KEYS
+    QuantumTypes.HASH, QuantumTypes.AND, QuantumTypes.OR, QuantumTypes.NOT,
+    QuantumTypes.BITWISE_AND, QuantumTypes.BITWISE_OR, QuantumTypes.BITWISE_XOR,
+    QuantumTypes.BITWISE_NOT, QuantumTypes.SHIFT_LEFT, QuantumTypes.SHIFT_RIGHT,
+    QuantumTypes.STAR, QuantumTypes.SLASH, QuantumTypes.PERCENT, QuantumTypes.PLUS, QuantumTypes.MINUS,
+    QuantumTypes.LESS_THAN, QuantumTypes.GREATER_THAN, QuantumTypes.LESS_THAN_EQUAL, QuantumTypes.GREATER_THAN_EQUAL,
+    QuantumTypes.ASSIGN -> EMPTY_KEYS
 
-        QuantumTypes.NUMBER, QuantumTypes.FLOATING_POINT -> NUMBER_KEYS
-        QuantumTypes.DIRECTIVE_TYPE -> TYPE_KEYS
-        QuantumTypes.IDENTIFIER -> EMPTY_KEYS
-        TokenType.WHITE_SPACE -> EMPTY_KEYS
-        TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
-        else -> {
-            EMPTY_KEYS
-        }
+    QuantumTypes.LPAREN, QuantumTypes.RPAREN -> PARENTHESIS_KEYS
+    QuantumTypes.LBRACKET, QuantumTypes.RBRACKET -> BRACKETS_KEYS
+    QuantumTypes.LBRACE, QuantumTypes.RBRACE -> BRACES_KEYS
+
+    QuantumTypes.NUMBER, QuantumTypes.FLOATING_POINT -> NUMBER_KEYS
+    QuantumTypes.DIRECTIVE_TYPE -> TYPE_KEYS
+    QuantumTypes.IDENTIFIER -> EMPTY_KEYS
+    TokenType.WHITE_SPACE -> EMPTY_KEYS
+    TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
+    else -> {
+      EMPTY_KEYS
     }
+  }
 }
 
 val KEYWORD = createTextAttributesKey("QUANTUM_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)

@@ -9,9 +9,9 @@ import dev.ultreon.quantum.qfunc.psi.QuantumGlobalName
 import dev.ultreon.quantum.qfunc.psi.QuantumPsiUtil
 
 class QuantumGlobalReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-        return element.containingFile.descendantsOfType<QuantumGlobalName>().toList().map {
-            QuantumGlobalReference(it)
-        }.toTypedArray()
-    }
+  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    return element.containingFile.descendantsOfType<QuantumGlobalName>().toList().map {
+      QuantumGlobalReference(it)
+    }.toTypedArray()
+  }
 }

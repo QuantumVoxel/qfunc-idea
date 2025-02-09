@@ -8,17 +8,17 @@ import dev.ultreon.quantum.qfunc.psi.QuantumVariableName
 
 class QuantumVariableReference(element: PsiElement) : PsiReferenceBase<PsiElement>(element) {
 
-    override fun resolve(): PsiElement? {
-        val root = element.containingFile
-        return PsiTreeUtil.findChildrenOfType(root, QuantumVariableName::class.java)
-            .firstOrNull { QuantumPsiUtil.isDeclaration(it) && it.text == element.text }
-    }
+  override fun resolve(): PsiElement? {
+    val root = element.containingFile
+    return PsiTreeUtil.findChildrenOfType(root, QuantumVariableName::class.java)
+      .firstOrNull { QuantumPsiUtil.isDeclaration(it) && it.text == element.text }
+  }
 
-    override fun getVariants(): Array<Any> {
-        val root = element.containingFile
-        return PsiTreeUtil.findChildrenOfType(root, QuantumVariableName::class.java)
-            .filter { QuantumPsiUtil.isDeclaration(it) }
-            .map { it.text }
-            .toTypedArray()
-    }
+  override fun getVariants(): Array<Any> {
+    val root = element.containingFile
+    return PsiTreeUtil.findChildrenOfType(root, QuantumVariableName::class.java)
+      .filter { QuantumPsiUtil.isDeclaration(it) }
+      .map { it.text }
+      .toTypedArray()
+  }
 }

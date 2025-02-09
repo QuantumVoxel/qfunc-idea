@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface QuantumPresentCond extends PsiElement {
-
-  @NotNull
-  QuantumGlobalExpr getGlobalExpr();
+public interface QuantumPathExpr extends PsiElement {
 
 }

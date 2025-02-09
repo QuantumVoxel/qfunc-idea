@@ -1,5 +1,5 @@
 {
-  parserClass="dev.ultreon.quantum.qfunc.parser.SimpleParser"
+  parserClass="dev.ultreon.quantum.qfunc.parser.QuantumParser"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -43,9 +43,8 @@ directive_type ::= LESS_THAN IDENTIFIER GREATER_THAN
 
 input_statement ::= HASH INPUT param_name (param_name)*
 
-condition ::= (is_cond | present_cond | expression)
+condition ::= (is_cond | expression)
 
-present_cond ::= PRESENT global_expr
 
 is_cond ::= expression IS expression
 
@@ -75,7 +74,7 @@ and_expr ::= or_expr (AND and_expr)?
 
 or_expr ::= negation_expr (OR or_expr)?
 
-negation_expr ::= NOT? equality_expr | NOT negation_expr
+negation_expr ::= NOT? equality_expr | NOT LPAREN negation_expr RPAREN
 
 equality_expr ::= relational_expr (EQUAL equality_expr)? | relational_expr (NOT_EQUAL equality_expr)?
 
@@ -104,11 +103,13 @@ atom ::= named_atom
        | BOOLEAN
        | id
 
-named_atom ::= (global_expr | parameter_expr | function_call | variable_name) member*
+global_ref ::= PRESENT? global_expr
+
+named_atom ::= (global_ref | parameter_expr | function_call | variable_name) member*
 
 variable_name ::= IDENTIFIER
 
-id ::= (LBRACKET namespace COLON path RBRACKET) | (LBRACKET HASH namespace COLON path RBRACKET)
+id ::= (LBRACKET namespace COLON path_expr RBRACKET) | (LBRACKET HASH namespace COLON path_expr RBRACKET)
 
 func_name ::= IDENTIFIER
 
@@ -118,7 +119,7 @@ member ::= COLON (function_call | variable_name)
 
 namespace ::= IDENTIFIER
 
-path ::= IDENTIFIER
+path_expr ::= PATH
 
 argument_list ::= LPAREN (argument_expr (COMMA argument_expr)*)? RPAREN
 
@@ -128,13 +129,13 @@ argument_expr ::= (parameter_name COLON expression) | expression
 
 stop_statement ::= STOP SEMICOLON
 
-if_statement ::= IF condition statement (ELSE statement)?
+if_statement ::= IF condition block_statement (ELSE block_statement)?
 
-for_statement ::= FOR IDENTIFIER IN expression statement
+for_statement ::= FOR IDENTIFIER IN expression block_statement
 
-while_statement ::= WHILE condition statement
+while_statement ::= WHILE condition block_statement
 
-loop_statement ::= LOOP statement
+loop_statement ::= LOOP block_statement
 
 return_statement ::= RETURN expression SEMICOLON
 

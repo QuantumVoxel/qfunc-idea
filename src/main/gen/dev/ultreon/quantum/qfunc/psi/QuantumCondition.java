@@ -13,7 +13,4 @@ public interface QuantumCondition extends PsiElement {
   @Nullable
   QuantumIsCond getIsCond();
 
-  @Nullable
-  QuantumPresentCond getPresentCond();
-
 }

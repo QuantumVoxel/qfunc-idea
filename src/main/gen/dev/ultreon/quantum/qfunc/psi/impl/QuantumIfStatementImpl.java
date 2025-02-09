@@ -29,14 +29,14 @@ public class QuantumIfStatementImpl extends ASTWrapperPsiElement implements Quan
 
   @Override
   @NotNull
-  public QuantumCondition getCondition() {
-    return findNotNullChildByClass(QuantumCondition.class);
+  public List<QuantumBlockStatement> getBlockStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, QuantumBlockStatement.class);
   }
 
   @Override
   @NotNull
-  public List<QuantumStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, QuantumStatement.class);
+  public QuantumCondition getCondition() {
+    return findNotNullChildByClass(QuantumCondition.class);
   }
 
 }

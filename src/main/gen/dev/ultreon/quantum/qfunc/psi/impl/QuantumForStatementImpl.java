@@ -29,14 +29,14 @@ public class QuantumForStatementImpl extends ASTWrapperPsiElement implements Qua
 
   @Override
   @NotNull
-  public QuantumExpression getExpression() {
-    return findNotNullChildByClass(QuantumExpression.class);
+  public QuantumBlockStatement getBlockStatement() {
+    return findNotNullChildByClass(QuantumBlockStatement.class);
   }
 
   @Override
   @NotNull
-  public QuantumStatement getStatement() {
-    return findNotNullChildByClass(QuantumStatement.class);
+  public QuantumExpression getExpression() {
+    return findNotNullChildByClass(QuantumExpression.class);
   }
 
 }

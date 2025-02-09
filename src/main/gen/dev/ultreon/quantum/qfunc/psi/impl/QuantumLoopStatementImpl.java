@@ -29,8 +29,8 @@ public class QuantumLoopStatementImpl extends ASTWrapperPsiElement implements Qu
 
   @Override
   @NotNull
-  public QuantumStatement getStatement() {
-    return findNotNullChildByClass(QuantumStatement.class);
+  public QuantumBlockStatement getBlockStatement() {
+    return findNotNullChildByClass(QuantumBlockStatement.class);
   }
 
 }

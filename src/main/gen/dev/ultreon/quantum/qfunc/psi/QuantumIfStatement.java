@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface QuantumIfStatement extends PsiElement {
 
   @NotNull
-  QuantumCondition getCondition();
+  List<QuantumBlockStatement> getBlockStatementList();
 
   @NotNull
-  List<QuantumStatement> getStatementList();
+  QuantumCondition getCondition();
 
 }

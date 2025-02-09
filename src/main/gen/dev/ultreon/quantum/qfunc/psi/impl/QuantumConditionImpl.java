@@ -39,10 +39,4 @@ public class QuantumConditionImpl extends ASTWrapperPsiElement implements Quantu
     return findChildByClass(QuantumIsCond.class);
   }
 
-  @Override
-  @Nullable
-  public QuantumPresentCond getPresentCond() {
-    return findChildByClass(QuantumPresentCond.class);
-  }
-
 }

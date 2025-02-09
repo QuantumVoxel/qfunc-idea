@@ -11,14 +11,14 @@ import static dev.ultreon.quantum.qfunc.psi.QuantumTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.ultreon.quantum.qfunc.psi.*;
 
-public class QuantumPresentCondImpl extends ASTWrapperPsiElement implements QuantumPresentCond {
+public class QuantumGlobalRefImpl extends ASTWrapperPsiElement implements QuantumGlobalRef {
 
-  public QuantumPresentCondImpl(@NotNull ASTNode node) {
+  public QuantumGlobalRefImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull QuantumVisitor visitor) {
-    visitor.visitPresentCond(this);
+    visitor.visitGlobalRef(this);
   }
 
   @Override

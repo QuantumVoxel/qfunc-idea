@@ -20,12 +20,13 @@ import static dev.ultreon.quantum.qfunc.psi.QuantumTypes.*;
 WHITESPACE = [ \t\n\r]+
 DIRECTIVE = "#" [a-zA-Z_][a-zA-Z0-9_]*
 STRING = "'" ([^'\n\r\\]|\\.)* "'"
+PATH = [a-zA-Z_]([a-zA-Z0-9_\-/.]*[a-zA-Z0-9])?
 IDENTIFIER = [a-zA-Z_]([a-zA-Z0-9_-]*[a-zA-Z0-9])?
 FLOATING_POINT = [0-9]+(\.[0-9]+)?
 NUMBER = [0-9]+
 COMMENT = "//" [^\n\r]*
 COMMA = ","
-SEMICOLON = ";"
+SEMICOLON = ;
 COLON = ":"
 ARROW = "->"
 LESS_THAN = "<"
@@ -65,19 +66,23 @@ CONTINUE = "continue"
 STOP = "stop"
 INPUT_DIRECTIVE = "input"
 PERSIST_DIRECTIVE = "persist"
+PRESENT = "present"
 DIRECTIVE = INPUT_DIRECTIVE | PERSIST_DIRECTIVE
 DOLLAR = "$"
 AT = "@"
-PRESENT = "present"
+QUESTION = "?"
+NOT = "!"
+DOT = "."
 
 %%
 
 <YYINITIAL> {
     {COMMENT}            { return COMMENT; }
+    {SEMICOLON}          { return SEMICOLON; }
     {WHITESPACE}         { return com.intellij.psi.TokenType.WHITE_SPACE; }
     {PERSIST_DIRECTIVE}  { return PERSIST; }
     {INPUT_DIRECTIVE}    { return INPUT; }
-    {SEMICOLON}          { return SEMICOLON; }
+    {PRESENT}            { return PRESENT; }
     {IF}                 { return IF; }
     {IS}                 { return IS; }
     {ELSE}               { return ELSE; }
@@ -95,6 +100,7 @@ PRESENT = "present"
     {SHIFT_RIGHT}        { return SHIFT_RIGHT; }
     {DOLLAR}             { return DOLLAR; }
     {AT}                 { return AT; }
+    {NOT}                { return NOT; }
     {LPAREN}             { return LPAREN; }
     {RPAREN}             { return RPAREN; }
     {LBRACKET}           { return LBRACKET; }
@@ -118,9 +124,9 @@ PRESENT = "present"
     {NOT_EQUAL}          { return NOT_EQUAL; }
     {STRING}             { return STRING; }
     {IDENTIFIER}         { return IDENTIFIER; }
+    {PATH}               { return PATH; }
     {FLOATING_POINT}     { return FLOATING_POINT; }
     {NUMBER}             { return NUMBER; }
-    {PRESENT}            { return PRESENT; }
 
    . { return com.intellij.psi.TokenType.BAD_CHARACTER; }
 }

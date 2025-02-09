@@ -35,8 +35,8 @@ public class QuantumIdImpl extends ASTWrapperPsiElement implements QuantumId {
 
   @Override
   @NotNull
-  public QuantumPath getPath() {
-    return findNotNullChildByClass(QuantumPath.class);
+  public QuantumPathExpr getPathExpr() {
+    return findNotNullChildByClass(QuantumPathExpr.class);
   }
 
 }

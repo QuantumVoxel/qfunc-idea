@@ -35,8 +35,8 @@ public class QuantumNamedAtomImpl extends ASTWrapperPsiElement implements Quantu
 
   @Override
   @Nullable
-  public QuantumGlobalExpr getGlobalExpr() {
-    return findChildByClass(QuantumGlobalExpr.class);
+  public QuantumGlobalRef getGlobalRef() {
+    return findChildByClass(QuantumGlobalRef.class);
   }
 
   @Override

@@ -4,7 +4,7 @@ package dev.ultreon.quantum.qfunc.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static dev.ultreon.quantum.qfunc.psi.QuantumTypes.*;
-import static dev.ultreon.quantum.qfunc.parser.QuantumParserUtil.*;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
@@ -552,7 +552,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FOR IDENTIFIER IN expression statement
+  // FOR IDENTIFIER IN expression block_statement
   public static boolean for_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "for_statement")) return false;
     if (!nextTokenIs(b, FOR)) return false;
@@ -560,7 +560,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, FOR, IDENTIFIER, IN);
     r = r && expression(b, l + 1);
-    r = r && statement(b, l + 1);
+    r = r && block_statement(b, l + 1);
     exit_section_(b, m, FOR_STATEMENT, r);
     return r;
   }
@@ -616,6 +616,26 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // PRESENT? global_expr
+  public static boolean global_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "global_ref")) return false;
+    if (!nextTokenIs(b, "<global ref>", DOLLAR, PRESENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, GLOBAL_REF, "<global ref>");
+    r = global_ref_0(b, l + 1);
+    r = r && global_expr(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // PRESENT?
+  private static boolean global_ref_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "global_ref_0")) return false;
+    consumeToken(b, PRESENT);
+    return true;
+  }
+
+  /* ********************************************************** */
   // (LPAREN and_expr RPAREN) | and_expr
   public static boolean group(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "group")) return false;
@@ -640,7 +660,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (LBRACKET namespace COLON path RBRACKET) | (LBRACKET HASH namespace COLON path RBRACKET)
+  // (LBRACKET namespace COLON path_expr RBRACKET) | (LBRACKET HASH namespace COLON path_expr RBRACKET)
   public static boolean id(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id")) return false;
     if (!nextTokenIs(b, LBRACKET)) return false;
@@ -652,7 +672,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // LBRACKET namespace COLON path RBRACKET
+  // LBRACKET namespace COLON path_expr RBRACKET
   private static boolean id_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id_0")) return false;
     boolean r;
@@ -660,13 +680,13 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, LBRACKET);
     r = r && namespace(b, l + 1);
     r = r && consumeToken(b, COLON);
-    r = r && path(b, l + 1);
+    r = r && path_expr(b, l + 1);
     r = r && consumeToken(b, RBRACKET);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // LBRACKET HASH namespace COLON path RBRACKET
+  // LBRACKET HASH namespace COLON path_expr RBRACKET
   private static boolean id_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "id_1")) return false;
     boolean r;
@@ -674,14 +694,14 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, LBRACKET, HASH);
     r = r && namespace(b, l + 1);
     r = r && consumeToken(b, COLON);
-    r = r && path(b, l + 1);
+    r = r && path_expr(b, l + 1);
     r = r && consumeToken(b, RBRACKET);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // IF condition statement (ELSE statement)?
+  // IF condition block_statement (ELSE block_statement)?
   public static boolean if_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "if_statement")) return false;
     if (!nextTokenIs(b, IF)) return false;
@@ -689,26 +709,26 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, IF);
     r = r && condition(b, l + 1);
-    r = r && statement(b, l + 1);
+    r = r && block_statement(b, l + 1);
     r = r && if_statement_3(b, l + 1);
     exit_section_(b, m, IF_STATEMENT, r);
     return r;
   }
 
-  // (ELSE statement)?
+  // (ELSE block_statement)?
   private static boolean if_statement_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "if_statement_3")) return false;
     if_statement_3_0(b, l + 1);
     return true;
   }
 
-  // ELSE statement
+  // ELSE block_statement
   private static boolean if_statement_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "if_statement_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ELSE);
-    r = r && statement(b, l + 1);
+    r = r && block_statement(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -774,14 +794,14 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LOOP statement
+  // LOOP block_statement
   public static boolean loop_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "loop_statement")) return false;
     if (!nextTokenIs(b, LOOP)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LOOP);
-    r = r && statement(b, l + 1);
+    r = r && block_statement(b, l + 1);
     exit_section_(b, m, LOOP_STATEMENT, r);
     return r;
   }
@@ -853,7 +873,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (global_expr | parameter_expr | function_call | variable_name) member*
+  // (global_ref | parameter_expr | function_call | variable_name) member*
   public static boolean named_atom(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "named_atom")) return false;
     boolean r;
@@ -864,11 +884,11 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // global_expr | parameter_expr | function_call | variable_name
+  // global_ref | parameter_expr | function_call | variable_name
   private static boolean named_atom_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "named_atom_0")) return false;
     boolean r;
-    r = global_expr(b, l + 1);
+    r = global_ref(b, l + 1);
     if (!r) r = parameter_expr(b, l + 1);
     if (!r) r = function_call(b, l + 1);
     if (!r) r = variable_name(b, l + 1);
@@ -899,7 +919,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NOT? equality_expr | NOT negation_expr
+  // NOT? equality_expr | NOT LPAREN negation_expr RPAREN
   public static boolean negation_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "negation_expr")) return false;
     boolean r;
@@ -928,13 +948,14 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // NOT negation_expr
+  // NOT LPAREN negation_expr RPAREN
   private static boolean negation_expr_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "negation_expr_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, NOT);
+    r = consumeTokens(b, 0, NOT, LPAREN);
     r = r && negation_expr(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1007,14 +1028,14 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean path(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "path")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+  // PATH
+  public static boolean path_expr(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_expr")) return false;
+    if (!nextTokenIs(b, PATH)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, PATH, r);
+    r = consumeToken(b, PATH);
+    exit_section_(b, m, PATH_EXPR, r);
     return r;
   }
 
@@ -1253,7 +1274,8 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // persist_statement
+  // line_comment
+  //             | persist_statement
   //             | input_statement
   //             | assignment
   //             | function_call
@@ -1271,7 +1293,8 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STATEMENT, "<statement>");
-    r = persist_statement(b, l + 1);
+    r = line_comment(b, l + 1);
+    if (!r) r = persist_statement(b, l + 1);
     if (!r) r = input_statement(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = function_call(b, l + 1);
@@ -1314,7 +1337,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // WHILE condition statement
+  // WHILE condition block_statement
   public static boolean while_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "while_statement")) return false;
     if (!nextTokenIs(b, WHILE)) return false;
@@ -1322,7 +1345,7 @@ public class QuantumParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, WHILE);
     r = r && condition(b, l + 1);
-    r = r && statement(b, l + 1);
+    r = r && block_statement(b, l + 1);
     exit_section_(b, m, WHILE_STATEMENT, r);
     return r;
   }

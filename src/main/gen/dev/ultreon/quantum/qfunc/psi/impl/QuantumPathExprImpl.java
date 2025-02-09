@@ -11,14 +11,14 @@ import static dev.ultreon.quantum.qfunc.psi.QuantumTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.ultreon.quantum.qfunc.psi.*;
 
-public class QuantumPathImpl extends ASTWrapperPsiElement implements QuantumPath {
+public class QuantumPathExprImpl extends ASTWrapperPsiElement implements QuantumPathExpr {
 
-  public QuantumPathImpl(@NotNull ASTNode node) {
+  public QuantumPathExprImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull QuantumVisitor visitor) {
-    visitor.visitPath(this);
+    visitor.visitPathExpr(this);
   }
 
   @Override

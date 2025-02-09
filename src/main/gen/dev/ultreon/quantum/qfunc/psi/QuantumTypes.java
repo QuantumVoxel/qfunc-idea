@@ -31,6 +31,7 @@ public interface QuantumTypes {
   IElementType FUNC_NAME = new QuantumElementType("FUNC_NAME");
   IElementType GLOBAL_EXPR = new QuantumElementType("GLOBAL_EXPR");
   IElementType GLOBAL_NAME = new QuantumElementType("GLOBAL_NAME");
+  IElementType GLOBAL_REF = new QuantumElementType("GLOBAL_REF");
   IElementType GROUP = new QuantumElementType("GROUP");
   IElementType ID = new QuantumElementType("ID");
   IElementType IF_STATEMENT = new QuantumElementType("IF_STATEMENT");
@@ -47,9 +48,8 @@ public interface QuantumTypes {
   IElementType PARAMETER_EXPR = new QuantumElementType("PARAMETER_EXPR");
   IElementType PARAMETER_NAME = new QuantumElementType("PARAMETER_NAME");
   IElementType PARAM_NAME = new QuantumElementType("PARAM_NAME");
-  IElementType PATH = new QuantumElementType("PATH");
+  IElementType PATH_EXPR = new QuantumElementType("PATH_EXPR");
   IElementType PERSIST_STATEMENT = new QuantumElementType("PERSIST_STATEMENT");
-  IElementType PRESENT_COND = new QuantumElementType("PRESENT_COND");
   IElementType PRIMARY = new QuantumElementType("PRIMARY");
   IElementType RELATIONAL_EXPR = new QuantumElementType("RELATIONAL_EXPR");
   IElementType RETURN_STATEMENT = new QuantumElementType("RETURN_STATEMENT");
@@ -96,6 +96,7 @@ public interface QuantumTypes {
   IElementType NOT_EQUAL = new QuantumTokenType("NOT_EQUAL");
   IElementType NUMBER = new QuantumTokenType("NUMBER");
   IElementType OR = new QuantumTokenType("OR");
+  IElementType PATH = new QuantumTokenType("PATH");
   IElementType PERCENT = new QuantumTokenType("PERCENT");
   IElementType PERSIST = new QuantumTokenType("PERSIST");
   IElementType PLUS = new QuantumTokenType("PLUS");
@@ -185,6 +186,9 @@ public interface QuantumTypes {
       else if (type == GLOBAL_NAME) {
         return new QuantumGlobalNameImpl(node);
       }
+      else if (type == GLOBAL_REF) {
+        return new QuantumGlobalRefImpl(node);
+      }
       else if (type == GROUP) {
         return new QuantumGroupImpl(node);
       }
@@ -233,14 +237,11 @@ public interface QuantumTypes {
       else if (type == PARAM_NAME) {
         return new QuantumParamNameImpl(node);
       }
-      else if (type == PATH) {
-        return new QuantumPathImpl(node);
+      else if (type == PATH_EXPR) {
+        return new QuantumPathExprImpl(node);
       }
       else if (type == PERSIST_STATEMENT) {
         return new QuantumPersistStatementImpl(node);
-      }
-      else if (type == PRESENT_COND) {
-        return new QuantumPresentCondImpl(node);
       }
       else if (type == PRIMARY) {
         return new QuantumPrimaryImpl(node);

@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface QuantumForStatement extends PsiElement {
 
   @NotNull
-  QuantumExpression getExpression();
+  QuantumBlockStatement getBlockStatement();
 
   @NotNull
-  QuantumStatement getStatement();
+  QuantumExpression getExpression();
 
 }

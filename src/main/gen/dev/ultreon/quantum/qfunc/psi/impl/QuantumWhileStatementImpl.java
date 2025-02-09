@@ -29,14 +29,14 @@ public class QuantumWhileStatementImpl extends ASTWrapperPsiElement implements Q
 
   @Override
   @NotNull
-  public QuantumCondition getCondition() {
-    return findNotNullChildByClass(QuantumCondition.class);
+  public QuantumBlockStatement getBlockStatement() {
+    return findNotNullChildByClass(QuantumBlockStatement.class);
   }
 
   @Override
   @NotNull
-  public QuantumStatement getStatement() {
-    return findNotNullChildByClass(QuantumStatement.class);
+  public QuantumCondition getCondition() {
+    return findNotNullChildByClass(QuantumCondition.class);
   }
 
 }

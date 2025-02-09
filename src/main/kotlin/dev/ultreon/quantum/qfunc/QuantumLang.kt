@@ -48,7 +48,7 @@ class QuantumSyntaxHighlighter : SyntaxHighlighterBase() {
 
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> = when (tokenType) {
         QuantumTypes.IF, QuantumTypes.ELSE, QuantumTypes.FOR, QuantumTypes.WHILE, QuantumTypes.LOOP, QuantumTypes.BREAK,
-        QuantumTypes.CONTINUE, QuantumTypes.RETURN, QuantumTypes.STOP, QuantumTypes.IS -> KEYWORD_KEYS
+        QuantumTypes.CONTINUE, QuantumTypes.RETURN, QuantumTypes.STOP, QuantumTypes.IS, QuantumTypes.PRESENT -> KEYWORD_KEYS
         QuantumTypes.PERSIST -> DIRECTIVE_KEYS
         QuantumTypes.INPUT -> DIRECTIVE_KEYS
         QuantumTypes.DOLLAR -> VARIABLE_KEYS

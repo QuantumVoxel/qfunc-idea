@@ -11,6 +11,6 @@ public interface QuantumId extends PsiElement {
   QuantumNamespace getNamespace();
 
   @NotNull
-  QuantumPath getPath();
+  QuantumPathExpr getPathExpr();
 
 }

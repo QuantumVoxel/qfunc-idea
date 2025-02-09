@@ -99,6 +99,10 @@ public class QuantumVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitGlobalRef(@NotNull QuantumGlobalRef o) {
+    visitPsiElement(o);
+  }
+
   public void visitGroup(@NotNull QuantumGroup o) {
     visitPsiElement(o);
   }
@@ -163,15 +167,11 @@ public class QuantumVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPath(@NotNull QuantumPath o) {
+  public void visitPathExpr(@NotNull QuantumPathExpr o) {
     visitPsiElement(o);
   }
 
   public void visitPersistStatement(@NotNull QuantumPersistStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPresentCond(@NotNull QuantumPresentCond o) {
     visitPsiElement(o);
   }
 

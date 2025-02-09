@@ -11,7 +11,7 @@ public interface QuantumNamedAtom extends PsiElement {
   QuantumFunctionCall getFunctionCall();
 
   @Nullable
-  QuantumGlobalExpr getGlobalExpr();
+  QuantumGlobalRef getGlobalRef();
 
   @NotNull
   List<QuantumMember> getMemberList();
